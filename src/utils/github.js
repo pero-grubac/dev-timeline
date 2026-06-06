@@ -33,29 +33,28 @@ export async function fetchRepos(username, onProgress) {
   const raw = await fetchAllPages(`/users/${username}/repos`);
   const repos = raw.filter((r) => !r.fork);
 
-  const enriched = [];
-  for (let i = 0; i < repos.length; i++) {
-    const repo = repos[i];
-    onProgress(`Scanning languages [${i + 1}/${repos.length}] — ${repo.name}`);
-
-    let languages = {};
-    try {
-      languages = await ghFetch(repo.languages_url);
-    } catch (_) {}
-
-    enriched.push({
-      name: repo.name,
-      description: repo.description || "",
-      url: repo.html_url,
-      created: new Date(repo.created_at),
-      updated: new Date(repo.updated_at),
-      pushed: new Date(repo.pushed_at),
-      topics: repo.topics || [],
-      languages,
-      primaryLang: repo.language || null,
-      stars: repo.stargazers_count,
-    });
-  }
+  onProgress(`Scanning ${repos.length} repositories...`);
+  const enriched = await Promise.all(
+    repos.map(async (repo) => {
+      let languages = {};
+      try {
+        languages = await ghFetch(repo.languages_url);
+      } catch (_) {}
+      return {
+        name: repo.name,
+        description: repo.description || "",
+        url: repo.html_url,
+        created: new Date(repo.created_at),
+        updated: new Date(repo.updated_at),
+        pushed: new Date(repo.pushed_at),
+        topics: repo.topics || [],
+        languages,
+        primaryLang: repo.language || null,
+        stars: repo.stargazers_count,
+      };
+    }),
+  );
+  onProgress("Languages loaded ✓");
 
   return enriched;
 }
