@@ -17,7 +17,7 @@
 
 ## 📌 Project Overview
 
-**Dev Timeline** is a GitHub repository skill tracker built as a single-page React app. It reads any public GitHub profile via the GitHub REST API, analyses language usage and repo topics across all repositories, and renders a visual skill timeline — showing what you knew, when you knew it, and how much you used it. No backend. No auth. No tracking. Everything runs in your browser, with results cached in `localStorage` for one hour.
+**Dev Timeline** is a GitHub repository skill tracker built as a single-page React app. It reads any public GitHub profile via the GitHub REST API, analyses language usage and repo topics across all repositories, and renders a visual skill timeline — showing what you knew, when you knew it, and how much you used it. No backend. No tracking. Everything runs in your browser, with results cached in `localStorage` for one hour.
 
 ---
 
@@ -34,12 +34,12 @@
 
 ## 📊 What It Analyses
 
-| View | Description |
-|------|-------------|
-| **Language bars** | How many repos use each language, sorted by frequency |
-| **Topic bars** | Frameworks and tools extracted from repo topics |
-| **Language × Year heatmap** | Which languages appeared in which years — intensity reflects usage |
-| **Repository timeline** | Every repo grouped by creation year — name, description, language, topics, stars |
+| View                        | Description                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------- |
+| **Language bars**           | How many repos use each language, sorted by frequency                            |
+| **Topic bars**              | Frameworks and tools extracted from repo topics                                  |
+| **Language × Year heatmap** | Which languages appeared in which years — intensity reflects usage               |
+| **Repository timeline**     | Every repo grouped by creation year — name, description, language, topics, stars |
 
 ---
 
@@ -125,7 +125,20 @@ cd dev-timeline
 npm install
 ```
 
-### 3. Run locally
+### 3. Add a GitHub token (optional but recommended)
+
+Without a token the GitHub API allows 60 requests/hour per IP. Since the app fetches languages for every repository individually, this limit is reached quickly on larger profiles.
+
+Create a **fine-grained personal access token** at `github.com/settings/tokens?type=beta` with only **Public Repositories (read-only)** access — no write permissions needed.
+
+```bash
+# .env.local  — never commit this file
+VITE_GITHUB_TOKEN=github_pat_xxxx
+```
+
+> **Note:** Vite embeds `VITE_*` variables into the client bundle, so the token is technically visible in DevTools. A read-only public token carries no meaningful risk — the worst case is someone using your rate limit — but never use a token with write or private repo access here.
+
+### 4. Run locally
 
 ```bash
 npm run dev
@@ -137,12 +150,12 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ## 📋 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start local dev server |
-| `npm run build` | Production build to `dist/` |
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `npm run dev`     | Start local dev server               |
+| `npm run build`   | Production build to `dist/`          |
 | `npm run preview` | Preview the production build locally |
-| `npm run lint` | Run ESLint |
+| `npm run lint`    | Run ESLint                           |
 
 ---
 
@@ -153,11 +166,27 @@ Open [http://localhost:5173](http://localhost:5173)
 ```js
 export default defineConfig({
   plugins: [react()],
-  base: '/dev-timeline/',
-})
+  base: "/dev-timeline/",
+});
 ```
 
 The included `.github/workflows/deploy.yml` automatically builds and deploys on every push to `main`.
+
+To include your token in the deployed build, add it as a repository secret:
+
+**Settings → Secrets and variables → Actions → New repository secret**
+
+- Name: `VITE_GITHUB_TOKEN`
+- Value: your token
+
+Then add it to the build step in `deploy.yml`:
+
+```yaml
+- name: Build
+  run: npm run build
+  env:
+    VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+```
 
 **One-time setup:** go to **Settings → Pages → Source** and select **GitHub Actions**.
 
@@ -167,23 +196,23 @@ Site will be live at `https://pero-grubac.github.io/dev-timeline/`
 
 ## ⚠️ Limitations
 
-| Limitation | Detail |
-|-----------|--------|
-| **Public repos only** | GitHub REST API without a token returns public repositories only |
-| **Rate limit** | 60 requests/hour per IP — sufficient for most profiles; 1h cache minimises re-fetching |
-| **Topics required** | Framework detection depends on repo topics being set in GitHub settings |
-| **Language detection** | Based on GitHub's byte-count heuristic, not actual lines written |
+| Limitation             | Detail                                                                                                     |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Public repos only**  | The app reads public repositories only — no private repo access                                            |
+| **Rate limit**         | 60 req/hour without a token, 5 000 req/hour with one — a token is recommended for profiles with many repos |
+| **Topics required**    | Framework detection depends on repo topics being set in GitHub settings                                    |
+| **Language detection** | Based on GitHub's byte-count heuristic, not actual lines written                                           |
 
 ---
 
 ## 🏗️ Tech Stack
 
-| Tool | Version | Role |
-|------|---------|------|
-| React | 19 | UI framework |
-| Vite | 8 | Dev server & bundler |
-| GitHub REST API | v3 | Repo and language data |
-| localStorage | — | 1-hour result cache |
+| Tool            | Version | Role                   |
+| --------------- | ------- | ---------------------- |
+| React           | 19      | UI framework           |
+| Vite            | 8       | Dev server & bundler   |
+| GitHub REST API | v3      | Repo and language data |
+| localStorage    | —       | 1-hour result cache    |
 
 No external UI libraries. No CSS frameworks. No state management libraries.
 
