@@ -3,13 +3,13 @@ import { useGithub } from './hooks/useGithub'
 import { StatsRow } from './components/StatsRow'
 import { SkillsTab } from './components/SkillsTab'
 import { TimelineTab } from './components/TimelineTab'
-
-const DEFAULT_USERNAME = 'pero-grubac'
+import { ContributionCalendar } from './components/ContributionCalendar'
+import { DEFAULT_USERNAME, sourceLabel } from './utils/snapshot'
 
 export default function App() {
   const [username, setUsername] = useState(DEFAULT_USERNAME)
   const [activeTab, setActiveTab] = useState('skills')
-  const { status, repos, skills, load, refresh } = useGithub()
+  const { status, repos, skills, source, contributions, load, refresh } = useGithub()
 
   // Auto-load default profile on first render
   useEffect(() => {
@@ -59,7 +59,8 @@ export default function App() {
                 className="btn btn-ghost"
                 onClick={handleRefresh}
                 disabled={isLoading}
-                title="Force refresh (bypass cache)"
+                title="Fetch live data (bypass snapshot and cache)"
+                aria-label="Fetch live data"
               >
                 ↺
               </button>
@@ -70,11 +71,18 @@ export default function App() {
         <div className={`status-bar status-${status.type}`}>
           {isLoading && <span className="spinner" aria-hidden="true" />}
           {status.message}
+          {status.type === 'success' && source && (
+            <span className={`status-source source-${source.type}`}>· {sourceLabel(source)}</span>
+          )}
         </div>
 
         {hasData && (
           <>
             <StatsRow repos={repos} skills={skills} />
+
+            {contributions?.weeks?.length > 0 && (
+              <ContributionCalendar calendar={contributions} />
+            )}
 
             <div className="tabs" role="tablist">
               {['skills', 'timeline'].map(tab => (

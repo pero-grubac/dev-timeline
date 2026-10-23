@@ -16,7 +16,7 @@ export function RepoCard({ repo }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <span className="repo-dot" style={{ background: color }} />
+      <span className="repo-dot" style={{ background: color, color }} />
       <div className="repo-info">
         <div className="repo-name">{repo.name}</div>
         {repo.description && <div className="repo-desc">{repo.description}</div>}

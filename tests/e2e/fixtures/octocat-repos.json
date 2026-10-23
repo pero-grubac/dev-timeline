@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Hello-World",
+    "description": "My first repository",
+    "html_url": "https://github.com/octocat/Hello-World",
+    "languages_url": "https://api.github.com/repos/octocat/Hello-World/languages",
+    "created_at": "2011-01-26T19:01:12Z",
+    "updated_at": "2026-10-01T00:00:00Z",
+    "pushed_at": "2026-10-01T00:00:00Z",
+    "topics": [],
+    "language": null,
+    "stargazers_count": 3000,
+    "fork": false
+  },
+  {
+    "name": "linguist",
+    "description": "Language savant",
+    "html_url": "https://github.com/octocat/linguist",
+    "languages_url": "https://api.github.com/repos/octocat/linguist/languages",
+    "created_at": "2016-08-02T17:35:14Z",
+    "updated_at": "2026-09-01T00:00:00Z",
+    "pushed_at": "2026-09-01T00:00:00Z",
+    "topics": ["linguistics"],
+    "language": "Ruby",
+    "stargazers_count": 200,
+    "fork": false
+  },
+  {
+    "name": "forked-thing",
+    "description": "A fork, never shown",
+    "html_url": "https://github.com/octocat/forked-thing",
+    "languages_url": "https://api.github.com/repos/octocat/forked-thing/languages",
+    "created_at": "2020-01-01T00:00:00Z",
+    "updated_at": "2020-01-01T00:00:00Z",
+    "pushed_at": "2020-01-01T00:00:00Z",
+    "topics": [],
+    "language": "Go",
+    "stargazers_count": 0,
+    "fork": true
+  }
+]

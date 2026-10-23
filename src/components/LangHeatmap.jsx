@@ -1,4 +1,4 @@
-import { getLangColor } from "../utils/colors";
+import { getLangColor, isLight } from "../utils/colors";
 
 export function LangHeatmap({ years, topLangs }) {
   if (!years.length || !topLangs.length) return null;
@@ -38,7 +38,11 @@ export function LangHeatmap({ years, topLangs }) {
                       className="heatmap-cell"
                       style={{
                         background: val ? `${color}${hexAlpha}` : "transparent",
-                        color: val ? "#ffffff" : "var(--muted)",
+                        color: !val
+                          ? "var(--muted)"
+                          : alpha > 0.7 && isLight(color)
+                            ? "var(--bg)"
+                            : "#ffffff",
                       }}
                     >
                       {val > 0 ? val : "·"}

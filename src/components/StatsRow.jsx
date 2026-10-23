@@ -1,7 +1,6 @@
 export function StatsRow({ repos, skills }) {
   const totalStars = repos.reduce((s, r) => s + r.stars, 0)
   const years = skills.years.length
-  const firstYear = skills.years[skills.years.length - 1]?.year
 
   return (
     <div className="stats-row">

@@ -1,0 +1,67 @@
+{
+  "user": "pero-grubac",
+  "generatedAt": "2026-10-23T04:17:00Z",
+  "repos": [
+    {
+      "name": "dev-timeline",
+      "description": "Skill timeline for a GitHub profile",
+      "url": "https://github.com/pero-grubac/dev-timeline",
+      "created": "2026-03-01T10:00:00Z",
+      "updated": "2026-10-20T08:00:00Z",
+      "pushed": "2026-10-21T09:30:00Z",
+      "topics": ["react", "vite"],
+      "languages": { "JavaScript": 9000, "CSS": 3000, "HTML": 400 },
+      "primaryLang": "JavaScript",
+      "stars": 4
+    },
+    {
+      "name": "yamb-table",
+      "description": "Score sheet for Yamb",
+      "url": "https://github.com/pero-grubac/yamb-table",
+      "created": "2026-01-12T10:00:00Z",
+      "updated": "2026-09-01T08:00:00Z",
+      "pushed": "2026-09-01T08:00:00Z",
+      "topics": ["pwa"],
+      "languages": { "JavaScript": 5000, "HTML": 2000 },
+      "primaryLang": "JavaScript",
+      "stars": 1
+    },
+    {
+      "name": "Store-Management-System",
+      "description": "Inventory and orders",
+      "url": "https://github.com/pero-grubac/Store-Management-System",
+      "created": "2025-05-20T10:00:00Z",
+      "updated": "2025-08-01T08:00:00Z",
+      "pushed": "2025-08-01T08:00:00Z",
+      "topics": ["spring-boot", "postgresql"],
+      "languages": { "Java": 20000 },
+      "primaryLang": "Java",
+      "stars": 0
+    },
+    {
+      "name": "Secure-Repository",
+      "description": "",
+      "url": "https://github.com/pero-grubac/Secure-Repository",
+      "created": "2024-11-02T10:00:00Z",
+      "updated": "2025-01-10T08:00:00Z",
+      "pushed": "2025-01-10T08:00:00Z",
+      "topics": ["dotnet"],
+      "languages": { "C#": 15000 },
+      "primaryLang": "C#",
+      "stars": 2
+    },
+    {
+      "name": "Snake",
+      "description": "Terminal snake",
+      "url": "https://github.com/pero-grubac/Snake",
+      "created": "2024-02-14T10:00:00Z",
+      "updated": "2024-02-20T08:00:00Z",
+      "pushed": "2024-02-20T08:00:00Z",
+      "topics": [],
+      "languages": { "Python": 3000 },
+      "primaryLang": "Python",
+      "stars": 0
+    }
+  ],
+  "contributions": null
+}
