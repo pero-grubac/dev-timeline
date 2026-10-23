@@ -235,10 +235,12 @@ If the old `VITE_GITHUB_TOKEN` secret is still set, delete it and revoke that to
 
 | Workflow | Runs on | What it does |
 |----------|---------|--------------|
-| `ci.yml` | Pull requests and pushes to branches other than `main` | Three jobs: **test** (lint, unit tests, build), **e2e** (Playwright on desktop and mobile, API and snapshot mocked) and **lighthouse** (Lighthouse CI on the built site under `/dev-timeline/`) |
-| `deploy.yml` | Push to `main`, a manual run, or **daily at 04:17 UTC** | **test** and **e2e** first, then `npm run snapshot` with `GH_SNAPSHOT_TOKEN`, build, and deploy `dist/` to GitHub Pages |
+| `ci.yml` | Every push (including `main`) and pull request | Three jobs: **test** (lint, unit tests, build), **e2e** (Playwright on desktop and mobile, API and snapshot mocked) and **lighthouse** (Lighthouse CI on the built site under `/dev-timeline/`) |
+| `deploy.yml` | After **CI passes on `main`**, a manual run, or **daily at 04:17 UTC** (fresh data) | `npm run snapshot` with `GH_SNAPSHOT_TOKEN`, build, then deploy `dist/` to GitHub Pages |
 
-Both workflows **skip documentation-only changes** on push: commits that only touch `*.md`, `readme_assets/`, `LICENSE`, `.gitignore` or `.vscode/` do not start a run. Newer runs on the same branch cancel older ones, and npm downloads are cached. The daily run only refreshes the data (snapshot and heatmap).
+Deploy is chained to CI (`workflow_run`): a push to `main` is tested once, and only a green run is published, from exactly the commit that was tested. Documentation-only commits start neither.
+
+CI **skips documentation-only changes** on push: commits that only touch `*.md`, `readme_assets/`, `LICENSE`, `.gitignore` or `.vscode/` do not start a run. Newer runs on the same branch cancel older ones, and npm downloads are cached. The daily run only refreshes the data (snapshot and heatmap).
 
 ### Deployment setup (once)
 
