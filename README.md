@@ -15,7 +15,7 @@
 
 [![Live Demo](https://img.shields.io/badge/📈_Live_Demo-dev--timeline-7C6CF5?style=for-the-badge)](https://pero-grubac.github.io/dev-timeline/)
 
-<img src="readme_assets/demo.gif" alt="Dev Timeline demo: the default profile loads from its snapshot with the contribution heatmap, then the language and framework bars, the language by year heatmap and the repository timeline grouped by year" width="900">
+<img src="readme_assets/demo.gif" alt="Dev Timeline demo with a sample profile: stats and the contribution heatmap, the language and framework bars, the language by year heatmap, the repository timeline grouped by year, then a live scan of the octocat profile" width="900">
 
 </div>
 
